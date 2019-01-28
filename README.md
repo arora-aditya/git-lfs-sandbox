@@ -2,6 +2,10 @@
 
 ## Question:
 > Is there a way to delete a file from git LFS without messing up the repo?
+### Answer:
+Yes, run it without protection to wipe any sign that the file ever existed
+
+
 
 # MASTER LOG:
 
