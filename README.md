@@ -414,3 +414,185 @@ To github.com:arora-aditya/git-lfs-sandbox.git
 ```
 
 ## Run BFG on deleted file
+`java -jar /Users/arora-aditya/Downloads/bfg-1.13.0.jar --delete-files random_gen2019.04.26-12.12.48.txt
+`
+### Output
+```
+Adityas-MacBook-Pro:git-lfs-sandbox.git arora-aditya$ java -jar /Users/arora-aditya/Downloads/bfg-1.13.0.jar --delete-files random_gen2019.04.26-12.12.48.txt
+
+Using repo : /Users/arora-aditya/Desktop/personal/git-lfs-clones/git-lfs-sandbox.git
+
+Found 10 objects to protect
+Found 4 commit-pointing refs : HEAD, refs/heads/master, refs/heads/new_file, refs/heads/new_new_file
+
+Protected commits
+-----------------
+
+These are your protected commits, and so their contents will NOT be altered:
+
+ * commit 3d94f1a6 (protected by 'HEAD') - contains 1 dirty file :
+	- random_gen2019.04.26-12.12.48.txt (128 B)
+
+WARNING: The dirty content above may be removed from other commits, but as
+the *protected* commits still use it, it will STILL exist in your repository.
+
+Details of protected dirty content have been recorded here :
+
+/Users/arora-aditya/Desktop/personal/git-lfs-clones/git-lfs-sandbox.git.bfg-report/2019-04-26/15-53-59/protected-dirt/
+
+If you *really* want this content gone, make a manual commit that removes it,
+and then run the BFG on a fresh copy of your repo.
+
+
+Cleaning
+--------
+
+Found 5 commits
+Cleaning commits:       100% (5/5)
+Cleaning commits completed in 46 ms.
+
+BFG aborting: No refs to update - no dirty commits found??
+
+
+
+--
+You can rewrite history in Git - don't let Trump do it for real!
+Trump's administration has lied consistently, to make people give up on ever
+being told the truth. Don't give up: https://www.aclu.org/
+--
+
+
+Adityas-MacBook-Pro:git-lfs-sandbox.git arora-aditya$ git reflog expire --expire=now --all && git gc --prune=now --aggressive
+Enumerating objects: 23, done.
+Counting objects: 100% (23/23), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (22/22), done.
+Writing objects: 100% (23/23), done.
+Total 23 (delta 5), reused 15 (delta 0)
+Adityas-MacBook-Pro:git-lfs-sandbox.git arora-aditya$
+Adityas-MacBook-Pro:git-lfs-sandbox.git arora-aditya$ git push
+Total 0 (delta 0), reused 0 (delta 0)
+To github.com:arora-aditya/git-lfs-sandbox.git
+ + 00e766e...3d94f1a master -> master (forced update)
+Adityas-MacBook-Pro:git-lfs-sandbox.git arora-aditya$ java -jar /Users/arora-aditya/Downloads/bfg-1.13.0.jar --delete-files random_gen2019.04.26-12.12.48.txt
+
+Using repo : /Users/arora-aditya/Desktop/personal/git-lfs-clones/git-lfs-sandbox.git
+
+Found 10 objects to protect
+Found 4 commit-pointing refs : HEAD, refs/heads/master, refs/heads/new_file, refs/heads/new_new_file
+
+Protected commits
+-----------------
+
+These are your protected commits, and so their contents will NOT be altered:
+
+ * commit 3d94f1a6 (protected by 'HEAD') - contains 1 dirty file :
+	- random_gen2019.04.26-12.12.48.txt (128 B)
+
+WARNING: The dirty content above may be removed from other commits, but as
+the *protected* commits still use it, it will STILL exist in your repository.
+
+Details of protected dirty content have been recorded here :
+
+/Users/arora-aditya/Desktop/personal/git-lfs-clones/git-lfs-sandbox.git.bfg-report/2019-04-26/15-55-04/protected-dirt/
+
+If you *really* want this content gone, make a manual commit that removes it,
+and then run the BFG on a fresh copy of your repo.
+
+
+Cleaning
+--------
+
+Found 5 commits
+Cleaning commits:       100% (5/5)
+Cleaning commits completed in 47 ms.
+
+BFG aborting: No refs to update - no dirty commits found??
+
+
+
+--
+You can rewrite history in Git - don't let Trump do it for real!
+Trump's administration has lied consistently, to make people give up on ever
+being told the truth. Don't give up: https://www.rescue.org/topic/refugees-america
+--
+
+
+Adityas-MacBook-Pro:git-lfs-sandbox.git arora-aditya$ git push
+Everything up-to-date
+Adityas-MacBook-Pro:git-lfs-sandbox.git arora-aditya$ cd
+```
+
+# Running BFG without protection
+```
+Adityas-MacBook-Pro:git-lfs-sandbox.git arora-aditya$ java -jar /Users/arora-aditya/Downloads/bfg-1.13.0.jar --delete-files random_gen2019.04.26-12.12.48.txt --no-blob-protection
+
+Using repo : /Users/arora-aditya/Desktop/personal/git-lfs-clones/git-lfs-sandbox.git
+
+Found 0 objects to protect
+Found 4 commit-pointing refs : HEAD, refs/heads/master, refs/heads/new_file, refs/heads/new_new_file
+
+Protected commits
+-----------------
+
+You're not protecting any commits, which means the BFG will modify the contents of even *current* commits.
+
+This isn't recommended - ideally, if your current commits are dirty, you should fix up your working copy and commit that, check that your build still works, and only then run the BFG to clean up your history.
+
+Cleaning
+--------
+
+Found 5 commits
+Cleaning commits:       100% (5/5)
+Cleaning commits completed in 102 ms.
+
+Updating 2 Refs
+---------------
+
+	Ref                       Before     After   
+	---------------------------------------------
+	refs/heads/master       | 3d94f1a6 | 523f417f
+	refs/heads/new_new_file | 3d94f1a6 | 523f417f
+
+Updating references:    100% (2/2)
+...Ref update completed in 16 ms.
+
+Commit Tree-Dirt History
+------------------------
+
+	Earliest      Latest
+	|                  |
+	 .   .   .   .   D  
+
+	D = dirty commits (file tree fixed)
+	m = modified commits (commit message or parents changed)
+	. = clean commits (no changes to file tree)
+
+	                        Before     After   
+	-------------------------------------------
+	First modified commit | 3d94f1a6 | 523f417f
+	Last dirty commit     | 3d94f1a6 | 523f417f
+
+Deleted files
+-------------
+
+	Filename                            Git id          
+	----------------------------------------------------
+	random_gen2019.04.26-12.12.48.txt | 9e088c8b (128 B)
+
+
+In total, 2 object ids were changed. Full details are logged here:
+
+	/Users/arora-aditya/Desktop/personal/git-lfs-clones/git-lfs-sandbox.git.bfg-report/2019-04-26/16-04-41
+
+BFG run is complete! When ready, run: git reflog expire --expire=now --all && git gc --prune=now --aggressive
+
+
+--
+You can rewrite history in Git - don't let Trump do it for real!
+Trump's administration has lied consistently, to make people give up on ever
+being told the truth. Don't give up: https://www.aclu.org/
+--
+
+
+```
